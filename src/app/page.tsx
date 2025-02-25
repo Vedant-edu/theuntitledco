@@ -1,113 +1,314 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import Link from "next/link"
+import "tailwindcss/tailwind.css"
+import { Globe2, Server, Mail, Code, Palette, Bot, ArrowUpRight, Sun, Moon } from "lucide-react"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import DecryptedText from "./ui/decryptedtext"
+import PixelCard from "./ui/pixelcard"
+import Image from "next/image"
+import RollingGallery from "./ui/rollinggallery"
+export default function Page() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDark, setIsDark] = useState(true)
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }, [isDark])
+
+  const services = [
+    {
+      icon: <Palette className="h-8 w-8 text-orange-700" />,
+      title: "Web Tools",
+      description: "Creating intuitive and engaging user experiences",
+    },
+    {
+      icon: <Code className="h-8 w-8 text-orange-700" />,
+      title: "Design to Code",
+      description: "Converting your designs into clean, efficient, and responsive code",
+    },
+    {
+      icon: <Globe2 className="h-8 w-8 text-orange-700" />,
+      title: "Domain & Hosting",
+      description: "Secure domain registration and reliable hosting solutions for your digital presence",
+    },
+    {
+      icon: <Mail className="h-8 w-8 text-orange-700" />,
+      title: "Email Services",
+      description: "Professional email hosting and management for your business communications",
+    },
+   
+    {
+      icon: <Server className="h-8 w-8 text-orange-700" />,
+      title: "Technical Support",
+      description: "24/7 expert technical assistance for all your web-related needs",
+    },
+    {
+      icon: <Bot className="h-8 w-8 text-orange-700" />,
+      title: "AI Solutions",
+      description: "Cutting-edge AI integration services for modern business needs",
+    },
+  ]
+
+  const menuItems = [
+    { title: "HOME", href: "/" },
+    { title: "SERVICES", href: "#services" },
+   
+    { title: "CONTACT", href: "#contact" },
+  ]
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div
+      className={`min-h-screen  transition-colors duration-300 ${isDark ? "dark bg-black text-white" : "bg-[#f8f8f8]"}`}
+    >
+      <header className=" fixed w-full top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-black/80">
+        <div className="flex items-center max-w-7xl mx-auto justify-between p-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center space-x-3"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <div className="flex space-x-2">
+              <div className="h-2 w-2  rounded-full bg-orange-700"></div>
+              <div className="h-2 w-2  rounded-full bg-orange-700"></div>
+            </div>
+            <span className="text-sm font-medium text-black dark:text-white">the UNTITLED co.</span>
+          </motion.div>
+          <div className="flex items-center space-x-6">
+            <button className="text-sm hover:opacity-75 transition-opacity text-black dark:text-white" onClick={() => setIsDark(!isDark)}>
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <a href="mailto:hello@vedantmute.online" className="text-sm hover:underline text-black dark:text-white">
+              CONTACT US
+            </a>
+            <button className="flex flex-col space-y-1 z-50 text-black dark:text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <motion.span
+                animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                className="h-0.5 w-6 bg-current origin-center transition-transform"
+              ></motion.span>
+              <motion.span
+                animate={isMenuOpen ? { rotate: -45 } : { rotate: 0 }}
+                className="h-0.5 w-6 bg-current origin-center transition-transform"
+              ></motion.span>
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* Fullscreen Navigation Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-white dark:bg-black"
+          >
+            <div className="flex items-center justify-center h-full">
+              <nav className="text-center text-black dark:text-white">
+                {menuItems.map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="block text-4xl font-light my-9 hover:text-blue-600 hover:underline dark:hover:text-blue-400 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.title}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      <main className="max-w-7xl mx-auto relative pt-24">
+        <section className="px-6 pt-12">
+          {/* Gradient blob */}
+          <div
+            className="absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-orange-400 via-orange-300 to-yellow-200 opacity-50 blur-3xl dark:opacity-30"
+            aria-hidden="true"
+          />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+          <div className="relative">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-3xl text-7xl font-light leading-tight tracking-tight text-black dark:text-white"
+            >
+              <DecryptedText text="WE PROVIDE"/> <br />
+              <DecryptedText text="BEST DIGITAL"/><br />
+              <DecryptedText text="SERVICES"/>
+              
+            </motion.h1>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="mt-24 flex justify-between"
+            >
+              <div className="max-w-md">
+                <button className="relative px-8 py-3 rounded-full border-2 border-blck dark:border-current group overflow-hidden">
+                  <a href="mailto:hello@vedantmute.online" className="relative z-10 text-black dark:text-white">wanna discuss ?</a>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    className="absolute inset-0 border border-current rounded-full opacity-50"
+                  ></motion.div>
+                  <div className="absolute inset-0 bg-blue-600 dark:bg-blue-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                  
+                </button>
+                <p className="mt-8 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                  WE ARE THE LEADERS IN WEB DEVELOPMENT
+                  <br />
+                  INDUSTRY WITH THOUSANDS OF USERBASE.
+                </p>
+              </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+              <div className="flex items-end">
+                <motion.div whileHover={{ x: 10 }} className="flex items-center space-x-2 cursor-pointer">
+                  <span className="text-sm text-black dark:text-white">WHO WE ARE</span>
+                  <span className="h-px w-12 bg-current text-black dark:text-white"></span>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="mt-24 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-400"
+            >
+              We create quality content and cool ideas. We create websites, applications, 3D design, motion design and
+              animation. We bring the most daring ideas to life
+            </motion.p>
+          </div>
+        </section>
+        <section className="pt-16">
+        <div className=" px-5 sm:px-10 md:px-12 lg:px-5">
+            <div className="p-6 rounded-lg  grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                <div className="space-y-2">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white">
+                        10+
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Projects
+                    </p>
+                </div>
+                <div className="space-y-2">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white">
+                        2
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Years Experience
+                    </p>
+                </div>
+                <div className="space-y-2">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white">
+                        3+
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Clients
+                    </p>
+                </div>
+                <div className="space-y-2">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 dark:text-white">
+                        98%
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Satisfaction
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+        {/* Services Section */}
+        <section id="services" className="mt-16 px-6 py-20 ">
+          <div className="max-w-7xl mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl font-light mb-16 text-black dark:text-white"
+            >
+              OUR SERVICES
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+               
+                    <div className=" p-6 group hover:shadow-lg transition-all duration-300 relative overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 dark:bg-black/50">
+                      <div className="relative z-10">
+                        <motion.div whileHover={{ scale: 1.1 }} className="mb-4 text-orange-900 dark:text-orange-400">
+                          {service.icon}
+                        </motion.div>
+                        <h3 className="text-xl font-medium mb-2 text-black dark:text-white">{service.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{service.description}</p>
+                        <ArrowUpRight className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      <div className="absolute -right-4 -bottom-4 h-24 w-24 bg-gradient-to-br from-orange-600/5 to-blue-600/10 dark:from-blue-400/5 dark:to-blue-400/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+                    </div>
+                 
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Footer */}
+        <footer className="text-white py-20 px-6 dark:bg-black/90">
+          <div className="max-w-7xl mx-auto">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              
+              
+              <div className="flex flex-row justify-between">
+            <span className="text-sm font-medium text-black dark:text-white flex items-center gap-4"><div className="flex space-x-2">
+              <div className="h-2 w-2  rounded-full bg-orange-700"></div>
+              <div className="h-2 w-2  rounded-full bg-orange-700"></div>
+            </div>the UNTITLED co.</span>
+                <Image src="https://github.com/Vedant-edu/Images/blob/main/the.png?raw=true" height={100} width={100} alt="Company Logo"/>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+            >
+              <p className="text-sm text-gray-400">© 2024. All rights reserved.</p>
+              <div className="flex space-x-6">
+                <Link href="#" className="text-sm text-gray-400 transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="#" className="text-sm text-gray-400 transition-colors">
+                  Terms of Service
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  )
 }
