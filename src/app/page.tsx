@@ -1,14 +1,11 @@
 "use client"
-
 import Link from "next/link"
 import "tailwindcss/tailwind.css"
 import { Globe2, Server, Mail, Code, Palette, Bot, ArrowUpRight, Sun, Moon } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import DecryptedText from "./ui/decryptedtext"
-import PixelCard from "./ui/pixelcard"
 import Image from "next/image"
-import RollingGallery from "./ui/rollinggallery"
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDark, setIsDark] = useState(true)
